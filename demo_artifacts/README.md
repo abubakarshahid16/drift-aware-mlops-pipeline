@@ -8,6 +8,7 @@ This folder contains only final demo evidence for the project.
 - `live_localhost_walkthrough.webm`: smaller browser-friendly version of the same recording.
 - `live_localhost_preview.gif`: inline preview for GitHub README pages.
 - `live_localhost_thumbnail.png`: still image from the Grafana dashboard section.
+- `youtube_thumbnail.png`: polished 1280x720 thumbnail for YouTube, LinkedIn, and presentation uploads.
 
 ## Screenshots
 

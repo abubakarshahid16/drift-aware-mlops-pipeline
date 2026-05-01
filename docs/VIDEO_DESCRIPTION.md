@@ -4,6 +4,10 @@
 
 Drift-Aware MLOps Pipeline Live Demo | MLflow, Docker, Prometheus, Grafana, FastAPI, CI/CD
 
+## Thumbnail
+
+Use `demo_artifacts/youtube_thumbnail.png`. It is a 1280x720 thumbnail with the title, core MLOps tools, and a real Grafana dashboard capture from the live demo.
+
 ## Short Description
 
 Live localhost demo of an end-to-end drift-aware MLOps pipeline for streaming machine learning. The project shows FastAPI model serving, MLflow experiment tracking, Docker containerization, Prometheus metrics, Grafana dashboards, adaptive retraining signals, GitHub Actions CI/CD, and an IEEE-style research component.

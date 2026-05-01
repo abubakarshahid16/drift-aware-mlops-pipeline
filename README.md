@@ -43,6 +43,7 @@ The repository includes proof artifacts so it can be reviewed even before runnin
 | Smaller browser video | [Download WebM from GitHub raw](https://github.com/abubakarshahid16/drift-aware-mlops-pipeline/raw/main/demo_artifacts/live_localhost_walkthrough.webm) |
 | Demo video file | [demo_artifacts/live_localhost_walkthrough.mp4](demo_artifacts/live_localhost_walkthrough.mp4) |
 | Demo preview page | [demo_artifacts/DEMO_VIDEO.md](demo_artifacts/DEMO_VIDEO.md) |
+| Video thumbnail | [demo_artifacts/youtube_thumbnail.png](demo_artifacts/youtube_thumbnail.png) |
 | IEEE paper PDF | [paper/main.pdf](paper/main.pdf) |
 | IEEE paper source | [paper/main.tex](paper/main.tex) |
 | Screenshots | [demo_artifacts/screenshots](demo_artifacts/screenshots) |
