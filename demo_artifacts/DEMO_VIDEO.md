@@ -1,39 +1,46 @@
 # Demo Video
 
-GitHub may show the MP4 file page with this message:
+This folder now contains two kinds of evidence:
+
+1. `live_localhost_walkthrough.mp4` is the proper live demo. It records the project running from real localhost services.
+2. `mlops_live_demo.mp4` is the older screenshot/evidence review video.
+
+## Watch Or Download
+
+- [Download / open the real localhost MP4](https://github.com/abubakarshahid16/drift-aware-mlops-pipeline/raw/main/demo_artifacts/live_localhost_walkthrough.mp4)
+- [Download / open the smaller WebM](https://github.com/abubakarshahid16/drift-aware-mlops-pipeline/raw/main/demo_artifacts/live_localhost_walkthrough.webm)
+- [Open the MP4 file page](live_localhost_walkthrough.mp4)
+- [View screenshots](screenshots/)
+
+GitHub may show a message like this on large video file pages:
 
 ```text
 Sorry about that, but we can't show files that are this big right now.
 ```
 
-That does **not** mean the video is missing. It means GitHub is not previewing the MP4 inside the repository file viewer.
-
-## Watch Or Download
-
-- [Download / open the MP4 directly](https://github.com/abubakarshahid16/drift-aware-mlops-pipeline/raw/main/demo_artifacts/mlops_live_demo.mp4)
-- [Open the MP4 file page](mlops_live_demo.mp4)
-- [View screenshots](screenshots/)
+That does **not** mean the video is missing. Use the raw/download links above.
 
 ## Preview
 
-![Demo preview](demo_preview.gif)
+![Live localhost demo preview](live_localhost_preview.gif)
 
-## What The Video Shows
+## What The Proper Localhost Video Shows
 
-1. Docker Compose stack and smoke checks.
-2. FastAPI Swagger documentation.
-3. API health response.
-4. Prediction API response.
-5. Prometheus targets.
-6. Prometheus metric evidence.
-7. MLflow experiment tracking evidence.
-8. Grafana model performance dashboard.
-9. Grafana drift and retraining dashboard.
-10. Grafana infrastructure dashboard.
+1. FastAPI Swagger docs at `http://localhost:8000/docs`.
+2. API health response at `http://localhost:8000/health`.
+3. Live `POST /predict` response from the running API.
+4. Prometheus scrape targets at `http://localhost:9090/targets`.
+5. Live Prometheus query for `ml_predictions_total`.
+6. MLflow tracking evidence from `http://localhost:5000`.
+7. Grafana model performance dashboard at `http://localhost:3000`.
+8. Grafana drift and adaptive retraining dashboard.
+9. Grafana infrastructure and API health dashboard.
 
 ## Video Metadata
 
-- File: `mlops_live_demo.mp4`
-- Duration: 30 seconds
-- Resolution: 1280x720
-- Size: about 6.25 MB
+- File: `live_localhost_walkthrough.mp4`
+- Browser source: real local services on ports `8000`, `5000`, `9090`, `3000`, and `9100`
+- Duration: about 60 seconds
+- Resolution: 1366x768
+- MP4 size: about 13.2 MB
+- WebM size: about 3.2 MB

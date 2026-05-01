@@ -34,7 +34,7 @@
 | Monitoring dashboard | Grafana JSON dashboards |
 | Architecture diagram | `architecture/architecture.png` |
 | Experimental results | `experiments/results/results.csv` and `results.json` |
-| Demo video | `demo_artifacts/mlops_live_demo.mp4` |
+| Demo video | `demo_artifacts/live_localhost_walkthrough.mp4` |
 | Screenshots | `demo_artifacts/screenshots/` |
 
 ## Evaluation Criteria

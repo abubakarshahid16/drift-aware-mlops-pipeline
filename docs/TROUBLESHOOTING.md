@@ -96,10 +96,16 @@ Docker runs these steps automatically through the trainer service.
 
 ## Demo Video Does Not Preview In Browser
 
-GitHub may sometimes show a large video as a downloadable file rather than inline preview. The MP4 is still included at:
+GitHub may sometimes show a large video as a downloadable file rather than inline preview. The proper localhost walkthrough MP4 is still included at:
 
 ```text
-demo_artifacts/mlops_live_demo.mp4
+demo_artifacts/live_localhost_walkthrough.mp4
+```
+
+A smaller WebM version is also included at:
+
+```text
+demo_artifacts/live_localhost_walkthrough.webm
 ```
 
 Screenshots are also included in:

@@ -39,15 +39,17 @@ The repository includes proof artifacts so it can be reviewed even before runnin
 
 | Artifact | Link |
 |---|---|
-| Demo video download | [Download MP4 from GitHub raw](https://github.com/abubakarshahid16/drift-aware-mlops-pipeline/raw/main/demo_artifacts/mlops_live_demo.mp4) |
-| Demo video file | [demo_artifacts/mlops_live_demo.mp4](demo_artifacts/mlops_live_demo.mp4) |
+| Proper localhost walkthrough | [Download MP4 from GitHub raw](https://github.com/abubakarshahid16/drift-aware-mlops-pipeline/raw/main/demo_artifacts/live_localhost_walkthrough.mp4) |
+| Smaller browser video | [Download WebM from GitHub raw](https://github.com/abubakarshahid16/drift-aware-mlops-pipeline/raw/main/demo_artifacts/live_localhost_walkthrough.webm) |
+| Demo video file | [demo_artifacts/live_localhost_walkthrough.mp4](demo_artifacts/live_localhost_walkthrough.mp4) |
 | Demo preview page | [demo_artifacts/DEMO_VIDEO.md](demo_artifacts/DEMO_VIDEO.md) |
+| Screenshot review video | [demo_artifacts/mlops_live_demo.mp4](demo_artifacts/mlops_live_demo.mp4) |
 | Screenshots | [demo_artifacts/screenshots](demo_artifacts/screenshots) |
 | Demo guide | [docs/DEMO_GUIDE.md](docs/DEMO_GUIDE.md) |
 
-GitHub sometimes does not preview MP4 files inside the code viewer. If that happens, click **Raw**, the download icon, or use the direct raw link above.
+The primary walkthrough is a real browser recording of the local stack running at `localhost`: FastAPI, `/health`, live `/predict`, Prometheus, MLflow, and Grafana. GitHub sometimes does not preview MP4 files inside the code viewer. If that happens, click **Raw**, the download icon, or use the direct raw links above.
 
-![Demo preview](demo_artifacts/demo_preview.gif)
+![Live localhost demo preview](demo_artifacts/live_localhost_preview.gif)
 
 ### Demo Preview
 
@@ -107,7 +109,7 @@ Full setup instructions: [docs/SETUP.md](docs/SETUP.md)
 For a teacher, examiner, or reviewer, this is the fastest path:
 
 1. Read the project problem and architecture in this README.
-2. Watch [demo_artifacts/mlops_live_demo.mp4](demo_artifacts/mlops_live_demo.mp4).
+2. Watch [demo_artifacts/live_localhost_walkthrough.mp4](demo_artifacts/live_localhost_walkthrough.mp4).
 3. Open [docs/RUBRIC_MAPPING.md](docs/RUBRIC_MAPPING.md) to see every requirement mapped to files.
 4. Run `docker compose up -d --build`.
 5. Open FastAPI at http://localhost:8000/docs and test `/predict`.
