@@ -40,5 +40,5 @@ Use this checklist before final submission.
 ## Final Optional Polish
 
 - [ ] Run full benchmark and update `experiments/results/*`.
-- [ ] Compile `paper/main.tex` into final PDF.
+- [x] Compile `paper/main.tex` into final PDF.
 - [ ] Add a GitHub release with the demo video and final paper PDF.

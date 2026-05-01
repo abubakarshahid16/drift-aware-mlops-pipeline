@@ -26,7 +26,7 @@
 
 | Deliverable | Evidence |
 |---|---|
-| IEEE paper | `paper/main.tex` |
+| IEEE paper | `paper/main.pdf`, `paper/main.tex` |
 | GitHub repository | This repository |
 | Working CI/CD pipeline | `.github/workflows/` |
 | Dockerized application | `docker-compose.yml`, `deploy/docker/` |

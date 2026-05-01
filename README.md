@@ -43,6 +43,8 @@ The repository includes proof artifacts so it can be reviewed even before runnin
 | Smaller browser video | [Download WebM from GitHub raw](https://github.com/abubakarshahid16/drift-aware-mlops-pipeline/raw/main/demo_artifacts/live_localhost_walkthrough.webm) |
 | Demo video file | [demo_artifacts/live_localhost_walkthrough.mp4](demo_artifacts/live_localhost_walkthrough.mp4) |
 | Demo preview page | [demo_artifacts/DEMO_VIDEO.md](demo_artifacts/DEMO_VIDEO.md) |
+| IEEE paper PDF | [paper/main.pdf](paper/main.pdf) |
+| IEEE paper source | [paper/main.tex](paper/main.tex) |
 | Screenshot review video | [demo_artifacts/mlops_live_demo.mp4](demo_artifacts/mlops_live_demo.mp4) |
 | Screenshots | [demo_artifacts/screenshots](demo_artifacts/screenshots) |
 | Demo guide | [docs/DEMO_GUIDE.md](docs/DEMO_GUIDE.md) |
@@ -117,7 +119,7 @@ For a teacher, examiner, or reviewer, this is the fastest path:
 7. Open Prometheus at http://localhost:9090/targets and verify scrape targets.
 8. Open Grafana at http://localhost:3000 and inspect dashboards.
 9. Inspect `src/drift/detectors.py` for HybridDD.
-10. Inspect `paper/main.tex` and `paper/refs.bib` for the research deliverable.
+10. Inspect [paper/main.pdf](paper/main.pdf), `paper/main.tex`, and `paper/refs.bib` for the research deliverable.
 
 Presentation script: [docs/DEMO_GUIDE.md](docs/DEMO_GUIDE.md)
 
@@ -183,7 +185,7 @@ Core detector implementation: [src/drift/detectors.py](src/drift/detectors.py)
 |-- docs/                       # Setup, research, monitoring, API, troubleshooting, rubric
 |-- experiments/results/        # Benchmark result files
 |-- notebooks/                  # Walkthrough notebook
-|-- paper/                      # IEEE paper source, figures, bibliography
+|-- paper/                      # IEEE paper PDF, source, figures, bibliography
 |-- scripts/                    # Reproducibility and demo helper scripts
 |-- src/                        # Application, model, drift, monitoring, pipeline code
 `-- tests/                      # Unit and API tests
@@ -280,7 +282,7 @@ Verified services:
 | Prometheus metrics | Complete | `src/api/metrics.py`, `deploy/prometheus/` |
 | Grafana dashboard | Complete | `deploy/grafana/dashboards/` |
 | CI/CD | Complete | `.github/workflows/` |
-| Research paper | Complete | `paper/main.tex`, `paper/refs.bib` |
+| Research paper | Complete | `paper/main.pdf`, `paper/main.tex`, `paper/refs.bib` |
 | Literature review | Complete | 19 references in `paper/refs.bib` |
 | Experimental validation | Complete | `src/pipelines/experiment.py`, `experiments/results/` |
 | Architecture diagram | Complete | `architecture/architecture.png` |
