@@ -1,113 +1,119 @@
 # Drift-Aware Adaptive Retraining MLOps Pipeline
 
-An end-to-end MLOps research project for streaming classification under concept drift. The repository combines a real implementation with a research-style evaluation of a hybrid drift detector, then wraps it in Docker, MLflow, Prometheus, Grafana, and GitHub Actions.
+[![CI](https://github.com/abubakarshahid16/drift-aware-mlops-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/abubakarshahid16/drift-aware-mlops-pipeline/actions/workflows/ci.yml)
+[![Docker Build](https://github.com/abubakarshahid16/drift-aware-mlops-pipeline/actions/workflows/docker.yml/badge.svg)](https://github.com/abubakarshahid16/drift-aware-mlops-pipeline/actions/workflows/docker.yml)
+[![Paper](https://github.com/abubakarshahid16/drift-aware-mlops-pipeline/actions/workflows/paper.yml/badge.svg)](https://github.com/abubakarshahid16/drift-aware-mlops-pipeline/actions/workflows/paper.yml)
+![Python](https://img.shields.io/badge/Python-3.10--3.12-3776AB)
+![FastAPI](https://img.shields.io/badge/FastAPI-Inference-009688)
+![MLflow](https://img.shields.io/badge/MLflow-Tracking-0194E2)
+![Prometheus](https://img.shields.io/badge/Prometheus-Metrics-E6522C)
+![Grafana](https://img.shields.io/badge/Grafana-Dashboards-F46800)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-## What This Repository Demonstrates
+An end-to-end MLOps research project for streaming classification under concept drift. It includes a real deployable system, a research contribution, experiment tracking, monitoring dashboards, CI/CD automation, an IEEE paper, screenshots, and a demo video.
 
-This project answers a practical production ML question:
+Repository: [github.com/abubakarshahid16/drift-aware-mlops-pipeline](https://github.com/abubakarshahid16/drift-aware-mlops-pipeline)
 
-> How can a model serving pipeline detect concept drift, expose that drift through production monitoring, and trigger adaptive retraining without turning the system into an unobservable black box?
+## Elevator Pitch
 
-The implemented answer is a FastAPI inference service connected to:
+Production ML models fail when the world changes. This project builds a complete MLOps pipeline that detects concept drift, exposes drift through Prometheus/Grafana, logs model experiments in MLflow, and triggers adaptive model reloads. The research contribution is **HybridDD**, a detector that combines performance drift and distribution drift signals.
 
-- MLflow for experiment tracking and model artifacts.
-- Docker Compose for a repeatable local deployment.
-- Prometheus for metrics collection.
-- Grafana for dashboards.
-- GitHub Actions for CI, Docker builds, paper builds, and optional AWS deploy.
-- A research benchmark comparing ADWIN, DDM, EDDM, KSWIN, Page-Hinkley, and the proposed HybridDD detector.
+## Table Of Contents
 
-## Live Demo Assets
+- [Demo First](#demo-first)
+- [What The Project Proves](#what-the-project-proves)
+- [One Command Run](#one-command-run)
+- [Step By Step Evaluation Path](#step-by-step-evaluation-path)
+- [Architecture](#architecture)
+- [Research Contribution](#research-contribution)
+- [Repository Map](#repository-map)
+- [Metrics And Dashboards](#metrics-and-dashboards)
+- [Experiments](#experiments)
+- [Validation](#validation)
+- [Assignment Rubric](#assignment-rubric)
+- [Documentation Index](#documentation-index)
 
-The demo video and screenshots are included directly in the repository.
+## Demo First
 
-- [Demo video](demo_artifacts/mlops_live_demo.mp4)
-- [All screenshots](demo_artifacts/screenshots)
-- [Demo artifact notes](demo_artifacts/README_demo_artifacts.txt)
+The repository includes proof artifacts so it can be reviewed even before running Docker.
+
+| Artifact | Link |
+|---|---|
+| Demo video | [demo_artifacts/mlops_live_demo.mp4](demo_artifacts/mlops_live_demo.mp4) |
+| Screenshots | [demo_artifacts/screenshots](demo_artifacts/screenshots) |
+| Demo guide | [docs/DEMO_GUIDE.md](docs/DEMO_GUIDE.md) |
 
 ### Demo Preview
 
-FastAPI inference API:
+| FastAPI | Prometheus |
+|---|---|
+| ![FastAPI docs](demo_artifacts/screenshots/02_api_docs.png) | ![Prometheus targets](demo_artifacts/screenshots/05_prometheus_targets.png) |
 
-![FastAPI docs](demo_artifacts/screenshots/02_api_docs.png)
+| MLflow | Grafana |
+|---|---|
+| ![MLflow tracking](demo_artifacts/screenshots/07_mlflow_experiment.png) | ![Grafana model performance](demo_artifacts/screenshots/08_grafana_model_performance.png) |
 
-Prometheus target health:
+## What The Project Proves
 
-![Prometheus targets](demo_artifacts/screenshots/05_prometheus_targets.png)
+This project demonstrates practical understanding of:
 
-Grafana model performance dashboard:
+- **Experiment tracking:** MLflow logs training runs, metrics, parameters, and artifacts.
+- **Model packaging:** Docker images package API, trainer, drift monitor, and MLflow.
+- **CI/CD automation:** GitHub Actions run linting, tests, smoke experiments, Docker builds, scans, and optional deployment.
+- **Monitoring and logging:** Prometheus metrics and Grafana dashboards track model health, latency, drift, and retraining.
+- **Deployment:** Docker Compose runs the full system locally; optional AWS ECS workflow is included.
+- **Research rigor:** The benchmark compares multiple drift detectors using accuracy, latency, throughput, delay, false positives, miss rate, retrains, and statistical tests.
 
-![Grafana model performance](demo_artifacts/screenshots/08_grafana_model_performance.png)
+## One Command Run
 
-MLflow tracking evidence:
-
-![MLflow tracking](demo_artifacts/screenshots/07_mlflow_experiment.png)
-
-## Architecture
-
-![Architecture](architecture/architecture.png)
-
-The system has four main planes:
-
-1. Inference plane: FastAPI serves `/predict`, `/health`, `/reload`, and `/metrics`.
-2. Tracking plane: MLflow records warmup training runs, model artifacts, parameters, and metrics.
-3. Monitoring plane: Prometheus scrapes API and drift-monitor metrics; Grafana renders dashboards.
-4. CI/CD plane: GitHub Actions run linting, tests, smoke experiments, Docker builds, scans, and optional deployment.
-
-Detailed architecture documentation:
-
-- [Architecture guide](docs/ARCHITECTURE.md)
-- [Monitoring guide](docs/MONITORING.md)
-- [CI/CD guide](docs/CI_CD.md)
-
-## Research Contribution
-
-The research contribution is HybridDD, a hybrid concept-drift detector that combines:
-
-- DDM, a performance-based detector that reacts when prediction errors increase.
-- KSWIN, a distribution-based detector that reacts when feature distributions shift.
-- A consensus rule and confidence override to reduce false positives while still reacting quickly to damaging drift.
-
-Research documentation:
-
-- [Research notes](docs/RESEARCH.md)
-- [Rubric mapping](docs/RUBRIC_MAPPING.md)
-- [IEEE paper source](paper/main.tex)
-- [Bibliography](paper/refs.bib)
-- [Experimental results](experiments/results/results.csv)
-
-## Quickstart: Run The Full Stack
-
-Requirements:
+Prerequisites:
 
 - Docker Desktop
-- Python 3.10 to 3.12 if running locally without Docker
+- Git
+- Python 3.10 to 3.12 for local development
 
-Start everything:
+Start the complete stack:
 
 ```bash
 docker compose up -d --build
 ```
 
-Open the services:
+Open:
 
-| Service | URL | Purpose |
-|---|---:|---|
-| FastAPI | http://localhost:8000/docs | Inference API and schema |
-| Prometheus | http://localhost:9090 | Metrics and scrape targets |
-| Grafana | http://localhost:3000 | Dashboards, login `admin` / `admin` |
-| MLflow | http://localhost:5000 | Experiment tracking |
-| Drift monitor metrics | http://localhost:9100/metrics | Drift-monitor metric endpoint |
+| Service | URL | Login |
+|---|---|---|
+| FastAPI docs | http://localhost:8000/docs | none |
+| Prometheus | http://localhost:9090 | none |
+| Grafana | http://localhost:3000 | `admin` / `admin` |
+| MLflow | http://localhost:5000 | none |
+| Drift metrics | http://localhost:9100/metrics | none |
 
-Stop everything:
+Stop:
 
 ```bash
 docker compose down
 ```
 
-## Smoke Test
+Full setup instructions: [docs/SETUP.md](docs/SETUP.md)
 
-After the stack is running:
+## Step By Step Evaluation Path
+
+For a teacher, examiner, or reviewer, this is the fastest path:
+
+1. Read the project problem and architecture in this README.
+2. Watch [demo_artifacts/mlops_live_demo.mp4](demo_artifacts/mlops_live_demo.mp4).
+3. Open [docs/RUBRIC_MAPPING.md](docs/RUBRIC_MAPPING.md) to see every requirement mapped to files.
+4. Run `docker compose up -d --build`.
+5. Open FastAPI at http://localhost:8000/docs and test `/predict`.
+6. Open MLflow at http://localhost:5000 and inspect training runs.
+7. Open Prometheus at http://localhost:9090/targets and verify scrape targets.
+8. Open Grafana at http://localhost:3000 and inspect dashboards.
+9. Inspect `src/drift/detectors.py` for HybridDD.
+10. Inspect `paper/main.tex` and `paper/refs.bib` for the research deliverable.
+
+Presentation script: [docs/DEMO_GUIDE.md](docs/DEMO_GUIDE.md)
+
+## Smoke Test
 
 ```bash
 curl http://localhost:8000/health
@@ -117,51 +123,80 @@ curl -X POST http://localhost:8000/predict \
   -d '{"features":[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8],"label":1}'
 ```
 
-Expected behavior:
+Expected:
 
 - `/health` returns `status=ok`.
-- `/predict` returns a class prediction, probability, model version, and latency.
-- Prometheus shows API and drift-monitor targets as `UP`.
-- Grafana loads three dashboards.
-- MLflow contains the warmup training run.
+- `/predict` returns prediction, probability, model version, and latency.
+- Prometheus targets are `UP`.
+- Grafana dashboards load.
+- MLflow contains warmup training runs.
 
-## Repository Structure
+API details: [docs/API_REFERENCE.md](docs/API_REFERENCE.md)
+
+## Architecture
+
+![Architecture](architecture/architecture.png)
+
+The system is divided into four planes:
+
+1. **Inference plane:** FastAPI serves `/predict`, `/health`, `/reload`, `/metrics`, and `/metrics-fastapi`.
+2. **Tracking plane:** MLflow stores experiments, metrics, parameters, and model artifacts.
+3. **Monitoring plane:** Prometheus scrapes API and drift-monitor metrics; Grafana renders dashboards.
+4. **CI/CD plane:** GitHub Actions run linting, tests, smoke experiments, Docker builds, scans, paper builds, and optional deployment.
+
+Architecture guide: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
+
+## Research Contribution
+
+The research contribution is **HybridDD**, a hybrid drift detector that combines:
+
+- DDM, a performance-based detector that reacts to increasing prediction error.
+- KSWIN, a distribution-based detector that reacts to feature shift.
+- A consensus rule to reduce false positives.
+- A confidence override for severe model degradation.
+- A cooldown rule to prevent retraining storms.
+
+Research guide: [docs/RESEARCH.md](docs/RESEARCH.md)
+
+Core detector implementation: [src/drift/detectors.py](src/drift/detectors.py)
+
+## Repository Map
 
 ```text
 .
-├── .github/workflows/          # CI, Docker build, optional deploy, paper build
-├── architecture/               # Mermaid and rendered architecture diagrams
-├── data/                       # Dataset placeholders and feature metadata
-├── demo_artifacts/             # Demo video and screenshots
-├── deploy/
-│   ├── docker/                 # Dockerfiles for API, trainer, drift monitor, MLflow
-│   ├── grafana/                # Provisioned dashboards and datasources
-│   └── prometheus/             # Scrape config and alert rules
-├── docs/                       # Project explanation and submission notes
-├── experiments/results/        # Benchmark result files
-├── notebooks/                  # Walkthrough notebook
-├── paper/                      # IEEE paper source, figures, bibliography
-├── scripts/                    # Reproducibility and demo helper scripts
-├── src/                        # Application, model, drift, monitoring, pipeline code
-└── tests/                      # Unit and API tests
+|-- .github/workflows/          # CI, Docker build, optional deploy, paper build
+|-- architecture/               # Mermaid and rendered architecture diagrams
+|-- data/                       # Dataset placeholders and feature metadata
+|-- demo_artifacts/             # Demo video and screenshots
+|-- deploy/
+|   |-- docker/                 # Dockerfiles for API, trainer, drift monitor, MLflow
+|   |-- grafana/                # Provisioned dashboards and datasources
+|   `-- prometheus/             # Scrape config and alert rules
+|-- docs/                       # Setup, research, monitoring, API, troubleshooting, rubric
+|-- experiments/results/        # Benchmark result files
+|-- notebooks/                  # Walkthrough notebook
+|-- paper/                      # IEEE paper source, figures, bibliography
+|-- scripts/                    # Reproducibility and demo helper scripts
+|-- src/                        # Application, model, drift, monitoring, pipeline code
+`-- tests/                      # Unit and API tests
 ```
 
 ## Main Components
 
-| Component | Files | What it does |
+| Component | Files | Purpose |
 |---|---|---|
-| API service | `src/api/` | Serves prediction, health, reload, and Prometheus metrics endpoints |
-| Online models | `src/models/` | Wraps SGD, batch logistic regression, and Hoeffding tree learners |
-| Drift detectors | `src/drift/` | Implements ADWIN, DDM, EDDM, KSWIN, Page-Hinkley, and HybridDD |
-| Training pipeline | `src/pipelines/train.py` | Trains warmup model and logs to MLflow |
-| Experiment harness | `src/pipelines/experiment.py` | Runs prequential benchmark and statistical analysis |
-| Drift monitor | `src/monitoring/drift_service.py` | Streams data into the API, updates drift metrics, and triggers reloads |
-| Monitoring | `deploy/prometheus/`, `deploy/grafana/` | Scrapes metrics, alerts, and renders dashboards |
-| CI/CD | `.github/workflows/` | Lint, tests, smoke experiment, Docker build, paper build, optional AWS deploy |
+| API service | `src/api/` | Inference, health, reload, and metrics |
+| Online models | `src/models/` | SGD, logistic baseline, Hoeffding tree adapters |
+| Drift detectors | `src/drift/` | ADWIN, DDM, EDDM, KSWIN, Page-Hinkley, HybridDD |
+| Training pipeline | `src/pipelines/train.py` | Warmup training and MLflow logging |
+| Experiment harness | `src/pipelines/experiment.py` | Prequential benchmark and statistics |
+| Drift monitor | `src/monitoring/drift_service.py` | Drift metrics and adaptive reload loop |
+| Monitoring | `deploy/prometheus/`, `deploy/grafana/` | Scraping, alerts, dashboards |
+| CI/CD | `.github/workflows/` | Tests, lint, Docker, paper, optional deploy |
 
-## Metrics Exposed
+## Metrics And Dashboards
 
-The API and monitor expose production-style metrics:
+The API and drift monitor expose:
 
 - `ml_predictions_total`
 - `ml_prediction_errors_total`
@@ -174,9 +209,15 @@ The API and monitor expose production-style metrics:
 - `ml_inference_latency_seconds`
 - `ml_online_update_latency_seconds`
 
-Grafana dashboards use these metrics to visualize model quality, drift behavior, retraining events, API health, and latency.
+Dashboards:
 
-## Reproduce Experiments
+- Model Performance
+- Drift And Adaptive Retraining
+- Infrastructure And API Health
+
+Monitoring guide: [docs/MONITORING.md](docs/MONITORING.md)
+
+## Experiments
 
 Quick smoke experiment:
 
@@ -200,43 +241,63 @@ python -m src.pipelines.experiment \
   --streams elec2 sea hyperplane
 ```
 
-Refresh paper macros:
+Results guide: [docs/RESULTS.md](docs/RESULTS.md)
 
-```bash
-python scripts/fill_paper_numbers.py
-```
-
-## Validation Status
+## Validation
 
 Local validation performed:
 
-- `pytest`: 36 tests passed.
-- `ruff check src tests`: passed.
-- `ruff format --check src tests`: passed.
-- Docker Compose stack started successfully.
-- API, MLflow, Prometheus, Grafana, and drift monitor verified.
-- Demo video and screenshots generated.
+```text
+pytest                       36 passed
+ruff check src tests         passed
+ruff format --check src tests passed
+docker compose up -d --build passed
+```
 
-## Evaluation Rubric Summary
+Verified services:
 
-| Requirement | Status |
+- FastAPI
+- MLflow
+- Prometheus
+- Grafana
+- Drift monitor
+- Postgres-backed MLflow store
+
+## Assignment Rubric
+
+| Requirement | Status | Evidence |
+|---|---|---|
+| MLflow tracking | Complete | `src/pipelines/train.py`, MLflow service, screenshot |
+| Docker containerization | Complete | `docker-compose.yml`, `deploy/docker/` |
+| Prometheus metrics | Complete | `src/api/metrics.py`, `deploy/prometheus/` |
+| Grafana dashboard | Complete | `deploy/grafana/dashboards/` |
+| CI/CD | Complete | `.github/workflows/` |
+| Research paper | Complete | `paper/main.tex`, `paper/refs.bib` |
+| Literature review | Complete | 19 references in `paper/refs.bib` |
+| Experimental validation | Complete | `src/pipelines/experiment.py`, `experiments/results/` |
+| Architecture diagram | Complete | `architecture/architecture.png` |
+| Demo evidence | Complete | `demo_artifacts/` |
+
+Full rubric mapping: [docs/RUBRIC_MAPPING.md](docs/RUBRIC_MAPPING.md)
+
+## Documentation Index
+
+| Document | Purpose |
 |---|---|
-| MLflow tracking | Implemented and demonstrated |
-| Docker containerization | Implemented with Docker Compose |
-| Prometheus metrics | Implemented for API and drift monitor |
-| Grafana dashboard | Three dashboards provisioned |
-| CI/CD | GitHub Actions included |
-| Architecture diagram | Included |
-| Research paper | IEEE LaTeX source included |
-| Literature review | 19 bibliography entries included |
-| Experimental validation | Benchmark harness and result files included |
-| Demo media | Video and screenshots included |
+| [docs/SETUP.md](docs/SETUP.md) | Installation and run instructions |
+| [docs/DEMO_GUIDE.md](docs/DEMO_GUIDE.md) | Presentation walkthrough |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | System design and data flow |
+| [docs/MONITORING.md](docs/MONITORING.md) | Metrics, dashboards, alerts |
+| [docs/API_REFERENCE.md](docs/API_REFERENCE.md) | API endpoints and examples |
+| [docs/RESEARCH.md](docs/RESEARCH.md) | Research problem, RQs, methods |
+| [docs/RESULTS.md](docs/RESULTS.md) | Results files and interpretation |
+| [docs/CI_CD.md](docs/CI_CD.md) | GitHub Actions workflows |
+| [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) | Common issues and fixes |
+| [docs/RUBRIC_MAPPING.md](docs/RUBRIC_MAPPING.md) | Assignment checklist |
 
-Full mapping: [Rubric mapping](docs/RUBRIC_MAPPING.md)
+## Important Note
 
-## Notes For Evaluators
-
-The repository includes smoke-sized result artifacts for fast inspection. The paper macros include representative full-benchmark values, and the full benchmark command is provided for reproducibility. Running the full benchmark can take significantly longer than the smoke run because it evaluates multiple detectors, streams, models, and seeds.
+The checked-in result files are suitable for fast review and smoke validation. The paper includes representative full-benchmark values, and the full benchmark command is provided for reproducibility. For a final publication-style submission, rerun the full benchmark and commit the refreshed `experiments/results/*` files.
 
 ## License
 
