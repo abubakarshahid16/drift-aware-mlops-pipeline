@@ -39,9 +39,15 @@ The repository includes proof artifacts so it can be reviewed even before runnin
 
 | Artifact | Link |
 |---|---|
-| Demo video | [demo_artifacts/mlops_live_demo.mp4](demo_artifacts/mlops_live_demo.mp4) |
+| Demo video download | [Download MP4 from GitHub raw](https://github.com/abubakarshahid16/drift-aware-mlops-pipeline/raw/main/demo_artifacts/mlops_live_demo.mp4) |
+| Demo video file | [demo_artifacts/mlops_live_demo.mp4](demo_artifacts/mlops_live_demo.mp4) |
+| Demo preview page | [demo_artifacts/DEMO_VIDEO.md](demo_artifacts/DEMO_VIDEO.md) |
 | Screenshots | [demo_artifacts/screenshots](demo_artifacts/screenshots) |
 | Demo guide | [docs/DEMO_GUIDE.md](docs/DEMO_GUIDE.md) |
+
+GitHub sometimes does not preview MP4 files inside the code viewer. If that happens, click **Raw**, the download icon, or use the direct raw link above.
+
+![Demo preview](demo_artifacts/demo_preview.gif)
 
 ### Demo Preview
 

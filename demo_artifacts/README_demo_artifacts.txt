@@ -2,6 +2,13 @@ MLOps live demo artifacts
 
 Generated from: C:\Users\abuba\Documents\Codex\2026-04-28\files-mentioned-by-the-user-i22\extracted_project\mlops-project
 Video: mlops_live_demo.mp4
+Direct download:
+https://github.com/abubakarshahid16/drift-aware-mlops-pipeline/raw/main/demo_artifacts/mlops_live_demo.mp4
+
+If GitHub does not preview the MP4 in the file viewer, use the Raw button,
+download icon, or the direct download link above.
+
+Preview GIF: demo_preview.gif
 Video duration: 30.0s
 
 Screenshots:
