@@ -1,0 +1,10 @@
+{
+  "model": "sgd_logistic",
+  "metrics": {
+    "accuracy": 0.762,
+    "f1": 0.65,
+    "auc": 0.7923623371164354,
+    "logloss": 1.650864025654683
+  },
+  "run_id": "a59165e649744b0796961a3a4c7d1f3a"
+}

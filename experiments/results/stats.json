@@ -1,0 +1,14 @@
+{
+  "accuracy": {
+    "applicable": false,
+    "reason": "insufficient blocks/groups"
+  },
+  "mean_detection_delay": {
+    "applicable": false,
+    "reason": "insufficient blocks/groups"
+  },
+  "false_positive_rate": {
+    "applicable": false,
+    "reason": "insufficient blocks/groups"
+  }
+}
