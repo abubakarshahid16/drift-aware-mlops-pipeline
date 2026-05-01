@@ -1,30 +1,21 @@
-"""Capture demo screenshots and build an MP4 walkthrough bundle."""
+"""Capture demo screenshots from running local services."""
+
 from __future__ import annotations
 
 import json
 import subprocess
 import textwrap
-import time
-import zipfile
 from pathlib import Path
 
-import cv2
-import numpy as np
 import requests
 from PIL import Image, ImageDraw, ImageFont
-from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "demo_artifacts"
 SHOTS = OUT / "screenshots"
-VIDEO = OUT / "mlops_live_demo.mp4"
-ZIP_PATH = OUT / "MLOps_Demo_Pack.zip"
 
 VIEWPORT = {"width": 1366, "height": 768}
-SLIDE_SIZE = (1280, 720)
-FPS = 30
-SECONDS_PER_STEP = 3
 
 
 def ensure_dirs() -> None:
@@ -56,7 +47,7 @@ def run_command(command: list[str], timeout: int = 60) -> str:
         if completed.stderr.strip():
             output += "\n\nSTDERR:\n" + completed.stderr.strip()
         return f"$ {' '.join(command)}\nexit={completed.returncode}\n\n{output}"
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         return f"$ {' '.join(command)}\nERROR: {exc}"
 
 
@@ -70,8 +61,11 @@ def smoke_report() -> str:
     sections.append(run_command(["docker", "compose", "ps"], timeout=30))
 
     try:
-        sections.append("GET /health\n" + pretty_json(requests.get("http://localhost:8000/health", timeout=10).json()))
-    except Exception as exc:  # noqa: BLE001
+        sections.append(
+            "GET /health\n"
+            + pretty_json(requests.get("http://localhost:8000/health", timeout=10).json())
+        )
+    except Exception as exc:
         sections.append(f"GET /health failed: {exc}")
 
     try:
@@ -81,7 +75,7 @@ def smoke_report() -> str:
             timeout=10,
         )
         sections.append("POST /predict\n" + pretty_json(response.json()))
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         sections.append(f"POST /predict failed: {exc}")
 
     try:
@@ -95,7 +89,7 @@ def smoke_report() -> str:
             for item in prom["data"]["activeTargets"]
         ]
         sections.append("Prometheus targets\n" + pretty_json(targets))
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         sections.append(f"Prometheus targets failed: {exc}")
 
     try:
@@ -108,7 +102,7 @@ def smoke_report() -> str:
             "Grafana dashboards\n"
             + pretty_json([{"title": d.get("title"), "url": d.get("url")} for d in dashboards])
         )
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         sections.append(f"Grafana dashboards failed: {exc}")
 
     try:
@@ -126,7 +120,7 @@ def smoke_report() -> str:
             for run in runs.get("runs", [])
         ]
         sections.append("MLflow runs\n" + pretty_json(compact))
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         sections.append(f"MLflow runs failed: {exc}")
 
     return "\n\n" + ("=" * 88 + "\n\n").join(sections)
@@ -147,7 +141,9 @@ def render_text_screenshot(title: str, text: str, path: Path) -> None:
         wrapped = textwrap.wrap(raw, width=max_chars, replace_whitespace=False) or [""]
         for line in wrapped:
             if y > VIEWPORT["height"] - 35:
-                draw.text((28, y), "... output trimmed for screenshot", fill="#374151", font=body_font)
+                draw.text(
+                    (28, y), "... output trimmed for screenshot", fill="#374151", font=body_font
+                )
                 img.save(path)
                 return
             draw.text((28, y), line, fill="#111827", font=body_font)
@@ -184,7 +180,7 @@ def login_grafana(page) -> None:
                 loc.first.click()
                 wait_soft(page, 1500)
                 break
-        except Exception:  # noqa: BLE001
+        except Exception:
             continue
 
 
@@ -198,7 +194,12 @@ def capture_browser_screenshots() -> list[tuple[Path, str]]:
         steps = [
             ("02_api_docs.png", "FastAPI Swagger docs", "http://localhost:8000/docs", 2500),
             ("03_api_health.png", "FastAPI health response", "http://localhost:8000/health", 1000),
-            ("05_prometheus_targets.png", "Prometheus targets", "http://localhost:9090/targets", 2500),
+            (
+                "05_prometheus_targets.png",
+                "Prometheus targets",
+                "http://localhost:9090/targets",
+                2500,
+            ),
         ]
         for filename, title, url, wait_ms in steps:
             path = SHOTS / filename
@@ -240,7 +241,9 @@ def capture_predict_page(title: str, path: Path) -> None:
         json={"features": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8], "label": 1},
         timeout=10,
     )
-    render_text_screenshot(title, "POST http://localhost:8000/predict\n\n" + pretty_json(response.json()), path)
+    render_text_screenshot(
+        title, "POST http://localhost:8000/predict\n\n" + pretty_json(response.json()), path
+    )
 
 
 def capture_prometheus_metrics_page(title: str, path: Path) -> None:
@@ -284,72 +287,6 @@ def capture_mlflow_page(title: str, path: Path) -> None:
     render_text_screenshot(title, "MLflow tracking API evidence\n\n" + pretty_json(payload), path)
 
 
-def fit_image_to_slide(src: Path, title: str) -> Image.Image:
-    base = Image.new("RGB", SLIDE_SIZE, "#0f172a")
-    draw = ImageDraw.Draw(base)
-    title_font = font(25, bold=True)
-    draw.rectangle((0, 0, SLIDE_SIZE[0], 54), fill="#111827")
-    draw.text((26, 15), title, fill="white", font=title_font)
-
-    img = Image.open(src).convert("RGB")
-    max_w = SLIDE_SIZE[0] - 42
-    max_h = SLIDE_SIZE[1] - 76
-    img.thumbnail((max_w, max_h), Image.Resampling.LANCZOS)
-    x = (SLIDE_SIZE[0] - img.width) // 2
-    y = 62 + (max_h - img.height) // 2
-    base.paste(img, (x, y))
-    return base
-
-
-def build_video(slides: list[tuple[Path, str]]) -> None:
-    writer = cv2.VideoWriter(str(VIDEO), cv2.VideoWriter_fourcc(*"mp4v"), FPS, SLIDE_SIZE)
-    if not writer.isOpened():
-        raise RuntimeError(f"Could not open video writer for {VIDEO}")
-
-    frames_per_slide = FPS * SECONDS_PER_STEP
-    for path, title in slides:
-        slide = fit_image_to_slide(path, title)
-        arr = cv2.cvtColor(np.array(slide), cv2.COLOR_RGB2BGR)
-        for _ in range(frames_per_slide):
-            writer.write(arr)
-    writer.release()
-
-
-def verify_video() -> dict[str, float]:
-    cap = cv2.VideoCapture(str(VIDEO))
-    if not cap.isOpened():
-        raise RuntimeError(f"Could not read generated video: {VIDEO}")
-    frames = cap.get(cv2.CAP_PROP_FRAME_COUNT)
-    fps = cap.get(cv2.CAP_PROP_FPS)
-    cap.release()
-    return {"frames": frames, "fps": fps, "duration_s": frames / fps if fps else 0}
-
-
-def write_readme(slides: list[tuple[Path, str]], video_info: dict[str, float]) -> Path:
-    readme = OUT / "README_demo_artifacts.txt"
-    lines = [
-        "MLOps live demo artifacts",
-        "",
-        f"Generated from: {ROOT}",
-        f"Video: {VIDEO.name}",
-        f"Video duration: {video_info['duration_s']:.1f}s",
-        "",
-        "Screenshots:",
-    ]
-    for path, title in slides:
-        lines.append(f"- {path.name}: {title}")
-    readme.write_text("\n".join(lines), encoding="utf-8")
-    return readme
-
-
-def make_zip(files: list[Path]) -> None:
-    if ZIP_PATH.exists():
-        ZIP_PATH.unlink()
-    with zipfile.ZipFile(ZIP_PATH, "w", compression=zipfile.ZIP_DEFLATED) as zf:
-        for file in files:
-            zf.write(file, file.relative_to(OUT))
-
-
 def main() -> None:
     ensure_dirs()
 
@@ -372,16 +309,9 @@ def main() -> None:
     capture_mlflow_page("MLflow experiment tracking", mlflow_path)
     slides.insert(6, (mlflow_path, "MLflow experiment tracking"))
 
-    build_video(slides)
-    video_info = verify_video()
-    readme = write_readme(slides, video_info)
-    make_zip([path for path, _ in slides] + [VIDEO, readme])
-
     print("created screenshots:")
     for path, title in slides:
         print(f"- {path} :: {title}")
-    print(f"created video: {VIDEO} ({video_info['duration_s']:.1f}s)")
-    print(f"created zip: {ZIP_PATH}")
 
 
 if __name__ == "__main__":

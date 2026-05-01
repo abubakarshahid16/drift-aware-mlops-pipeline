@@ -1,9 +1,6 @@
 # Demo Video
 
-This folder now contains two kinds of evidence:
-
-1. `live_localhost_walkthrough.mp4` is the proper live demo. It records the project running from real localhost services.
-2. `mlops_live_demo.mp4` is the older screenshot/evidence review video.
+This folder contains the official live demo evidence for the project. The main video records the system running from real localhost services, not a slideshow.
 
 ## Watch Or Download
 
@@ -35,6 +32,10 @@ That does **not** mean the video is missing. Use the raw/download links above.
 7. Grafana model performance dashboard at `http://localhost:3000`.
 8. Grafana drift and adaptive retraining dashboard.
 9. Grafana infrastructure and API health dashboard.
+
+## Upload Description
+
+Use [docs/VIDEO_DESCRIPTION.md](../docs/VIDEO_DESCRIPTION.md) for the optimized title, description, hashtags, and keywords if the demo is uploaded to YouTube, LinkedIn, or a course portal.
 
 ## Video Metadata
 

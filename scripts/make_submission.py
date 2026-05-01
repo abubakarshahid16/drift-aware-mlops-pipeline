@@ -3,10 +3,10 @@
 Excludes caches, MLflow runs, large raw data, and model joblib artefacts.
 The output filename encodes the team roll numbers.
 """
+
 from __future__ import annotations
 
 import fnmatch
-import os
 import sys
 import zipfile
 from pathlib import Path
@@ -34,10 +34,14 @@ EXCLUDE_DIRS = {
     "dist",
 }
 EXCLUDE_GLOBS = [
-    "*.pyc", "*.pyo", "*.pyd",
-    "*.joblib", "*.pkl",
+    "*.pyc",
+    "*.pyo",
+    "*.pyd",
+    "*.joblib",
+    "*.pkl",
     "*.log",
-    ".coverage", ".coverage.*",
+    ".coverage",
+    ".coverage.*",
     "*.egg-info",
     "data/raw/elec2.csv",
     "data/processed/*.npy",
@@ -49,8 +53,9 @@ def is_excluded(rel: Path) -> bool:
     if parts & EXCLUDE_DIRS:
         return True
     rel_str = str(rel).replace("\\", "/")
-    return any(fnmatch.fnmatch(rel_str, pat) or fnmatch.fnmatch(rel.name, pat)
-               for pat in EXCLUDE_GLOBS)
+    return any(
+        fnmatch.fnmatch(rel_str, pat) or fnmatch.fnmatch(rel.name, pat) for pat in EXCLUDE_GLOBS
+    )
 
 
 def main() -> int:

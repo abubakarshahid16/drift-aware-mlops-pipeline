@@ -45,9 +45,9 @@ The repository includes proof artifacts so it can be reviewed even before runnin
 | Demo preview page | [demo_artifacts/DEMO_VIDEO.md](demo_artifacts/DEMO_VIDEO.md) |
 | IEEE paper PDF | [paper/main.pdf](paper/main.pdf) |
 | IEEE paper source | [paper/main.tex](paper/main.tex) |
-| Screenshot review video | [demo_artifacts/mlops_live_demo.mp4](demo_artifacts/mlops_live_demo.mp4) |
 | Screenshots | [demo_artifacts/screenshots](demo_artifacts/screenshots) |
 | Demo guide | [docs/DEMO_GUIDE.md](docs/DEMO_GUIDE.md) |
+| Video title, description, keywords | [docs/VIDEO_DESCRIPTION.md](docs/VIDEO_DESCRIPTION.md) |
 
 The primary walkthrough is a real browser recording of the local stack running at `localhost`: FastAPI, `/health`, live `/predict`, Prometheus, MLflow, and Grafana. GitHub sometimes does not preview MP4 files inside the code viewer. If that happens, click **Raw**, the download icon, or use the direct raw links above.
 
@@ -304,6 +304,7 @@ Full rubric mapping: [docs/RUBRIC_MAPPING.md](docs/RUBRIC_MAPPING.md)
 | [docs/CI_CD.md](docs/CI_CD.md) | GitHub Actions workflows |
 | [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) | Common issues and fixes |
 | [docs/RUBRIC_MAPPING.md](docs/RUBRIC_MAPPING.md) | Assignment checklist |
+| [docs/VIDEO_DESCRIPTION.md](docs/VIDEO_DESCRIPTION.md) | Optimized demo video title, description, and keywords |
 
 ## Important Note
 

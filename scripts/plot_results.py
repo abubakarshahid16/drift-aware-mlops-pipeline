@@ -5,6 +5,7 @@ Outputs:
     paper/figures/detection_delay.png
     paper/figures/cd_diagram.png
 """
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -18,8 +19,14 @@ RESULTS_CSV = ROOT / "experiments" / "results" / "results.csv"
 FIG_DIR = ROOT / "paper" / "figures"
 
 DETECTORS = ["adwin", "ddm", "eddm", "kswin", "page_hinkley", "hybrid"]
-PRETTY = {"adwin": "ADWIN", "ddm": "DDM", "eddm": "EDDM",
-          "kswin": "KSWIN", "page_hinkley": "Page-Hinkley", "hybrid": "HybridDD"}
+PRETTY = {
+    "adwin": "ADWIN",
+    "ddm": "DDM",
+    "eddm": "EDDM",
+    "kswin": "KSWIN",
+    "page_hinkley": "Page-Hinkley",
+    "hybrid": "HybridDD",
+}
 
 
 def fig_accuracy(df: pd.DataFrame) -> Path:
@@ -61,8 +68,7 @@ def fig_detection_delay(df: pd.DataFrame) -> Path:
 
 def fig_cd_diagram(df: pd.DataFrame) -> Path:
     """Demsar critical-difference diagram on accuracy ranks."""
-    pivot = df.pivot_table(index=["stream", "seed"], columns="detector",
-                           values="accuracy")
+    pivot = df.pivot_table(index=["stream", "seed"], columns="detector", values="accuracy")
     pivot = pivot.dropna(how="any")
     if pivot.shape[0] < 3 or pivot.shape[1] < 3:
         return FIG_DIR / "cd_diagram.png"
@@ -70,8 +76,17 @@ def fig_cd_diagram(df: pd.DataFrame) -> Path:
     ranks = pivot.rank(axis=1, ascending=False, method="average")
     avg = ranks.mean(axis=0).sort_values()
     k, n = pivot.shape[1], pivot.shape[0]
-    q_alpha = {2: 1.960, 3: 2.343, 4: 2.569, 5: 2.728, 6: 2.850, 7: 2.949,
-               8: 3.031, 9: 3.102, 10: 3.164}
+    q_alpha = {
+        2: 1.960,
+        3: 2.343,
+        4: 2.569,
+        5: 2.728,
+        6: 2.850,
+        7: 2.949,
+        8: 3.031,
+        9: 3.102,
+        10: 3.164,
+    }
     cd = q_alpha.get(k, 2.85) * np.sqrt(k * (k + 1) / (6 * n))
 
     fig, ax = plt.subplots(figsize=(7.0, 2.6))
@@ -82,12 +97,9 @@ def fig_cd_diagram(df: pd.DataFrame) -> Path:
     ax.set_xlabel("Average rank (lower is better)")
     for det, r in avg.items():
         ax.plot([r, r], [y, y + 0.25], color="black")
-        ax.text(r, y + 0.32, PRETTY.get(det, det), rotation=45,
-                ha="left", va="bottom", fontsize=9)
-    ax.plot([avg.iloc[0], avg.iloc[0] + cd], [y - 0.15, y - 0.15],
-            color="red", lw=2)
-    ax.text(avg.iloc[0] + cd / 2, y - 0.28, f"CD = {cd:.2f}",
-            color="red", ha="center", fontsize=9)
+        ax.text(r, y + 0.32, PRETTY.get(det, det), rotation=45, ha="left", va="bottom", fontsize=9)
+    ax.plot([avg.iloc[0], avg.iloc[0] + cd], [y - 0.15, y - 0.15], color="red", lw=2)
+    ax.text(avg.iloc[0] + cd / 2, y - 0.28, f"CD = {cd:.2f}", color="red", ha="center", fontsize=9)
     ax.set_title("Nemenyi critical difference (alpha = 0.05)")
     fig.tight_layout()
     out = FIG_DIR / "cd_diagram.png"

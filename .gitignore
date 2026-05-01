@@ -35,11 +35,10 @@ htmlcov/
 .ipynb_checkpoints/
 *.ipynb_checkpoints
 
-# Data (keep dir, ignore content except .gitkeep)
+# Data (keep lightweight documentation and feature schema, ignore generated data)
 data/raw/*
 data/processed/*
-!data/raw/.gitkeep
-!data/processed/.gitkeep
+!data/raw/README.md
 !data/processed/features.txt
 
 # Experiment artifacts

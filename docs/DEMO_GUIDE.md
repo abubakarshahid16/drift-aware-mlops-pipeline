@@ -153,5 +153,4 @@ End with:
 
 - Proper localhost video: `demo_artifacts/live_localhost_walkthrough.mp4`
 - Smaller browser video: `demo_artifacts/live_localhost_walkthrough.webm`
-- Screenshot review video: `demo_artifacts/mlops_live_demo.mp4`
 - Screenshots: `demo_artifacts/screenshots/`
