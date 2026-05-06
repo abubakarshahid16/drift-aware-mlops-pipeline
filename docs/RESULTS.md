@@ -27,6 +27,7 @@ Common columns:
 - `throughput_samples_per_s`
 - `elapsed_s`
 - `latency_*`
+- `n_samples`
 
 Synthetic streams also include:
 
@@ -35,6 +36,7 @@ Synthetic streams also include:
 - `false_positives`
 - `missed`
 - `mean_detection_delay`
+- `penalized_detection_delay`
 - `false_positive_rate`
 - `miss_rate`
 
@@ -70,6 +72,10 @@ The experiment harness computes:
 
 - Friedman test over detector ranks.
 - Nemenyi critical difference for post-hoc comparison.
+- Penalized detection-delay comparison, where a missed drift is assigned the
+  stream length as a bounded worst-case delay. This keeps missed detections
+  visible in statistical tests instead of silently dropping them as missing
+  delay values.
 
 Implementation:
 

@@ -46,6 +46,7 @@ The repository includes proof artifacts so it can be reviewed even before runnin
 | Video thumbnail | [demo_artifacts/youtube_thumbnail.png](demo_artifacts/youtube_thumbnail.png) |
 | IEEE paper PDF | [paper/main.pdf](paper/main.pdf) |
 | IEEE paper source | [paper/main.tex](paper/main.tex) |
+| Final presentation deck | [presentation/Drift-Aware-MLOps-Final-Defense.pptx](presentation/Drift-Aware-MLOps-Final-Defense.pptx) |
 | Screenshots | [demo_artifacts/screenshots](demo_artifacts/screenshots) |
 | Demo guide | [docs/DEMO_GUIDE.md](docs/DEMO_GUIDE.md) |
 | Video title, description, keywords | [docs/VIDEO_DESCRIPTION.md](docs/VIDEO_DESCRIPTION.md) |
@@ -288,6 +289,7 @@ Verified services:
 | Experimental validation | Complete | `src/pipelines/experiment.py`, `experiments/results/` |
 | Architecture diagram | Complete | `architecture/architecture.png` |
 | Demo evidence | Complete | `demo_artifacts/` |
+| Final presentation | Complete | `presentation/Drift-Aware-MLOps-Final-Defense.pptx` |
 
 Full rubric mapping: [docs/RUBRIC_MAPPING.md](docs/RUBRIC_MAPPING.md)
 

@@ -67,6 +67,7 @@ def run_one(
         "detector": detector_name,
         "stream": stream_name,
         "seed": seed,
+        "n_samples": res.n_samples,
         "accuracy": res.accuracy,
         "retrains": res.retrains,
         "n_drift_events": len(res.drift_events),
@@ -82,6 +83,9 @@ def run_one(
                 "false_positives": dm.false_positives,
                 "missed": dm.missed,
                 "mean_detection_delay": dm.mean_delay,
+                "penalized_detection_delay": dm.mean_delay
+                if not np.isnan(dm.mean_delay)
+                else float(res.n_samples),
                 "false_positive_rate": dm.false_positive_rate,
                 "miss_rate": dm.miss_rate,
             }
@@ -186,8 +190,8 @@ def main() -> None:
 
     stats = {
         "accuracy": friedman_nemenyi(df, "accuracy", lower_is_better=False),
-        "mean_detection_delay": friedman_nemenyi(
-            df[df["stream"] != "elec2"], "mean_detection_delay", lower_is_better=True
+        "penalized_detection_delay": friedman_nemenyi(
+            df[df["stream"] != "elec2"], "penalized_detection_delay", lower_is_better=True
         ),
         "false_positive_rate": friedman_nemenyi(
             df[df["stream"] != "elec2"], "false_positive_rate", lower_is_better=True

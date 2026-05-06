@@ -1,14 +1,56 @@
 {
   "accuracy": {
-    "applicable": false,
-    "reason": "insufficient blocks/groups"
+    "applicable": true,
+    "metric": "accuracy",
+    "lower_is_better": false,
+    "n_blocks": 6,
+    "k_methods": 6,
+    "friedman_stat": 20.576923076923066,
+    "friedman_p": 0.0009735025294861174,
+    "average_ranks": {
+      "adwin": 2.5833333333333335,
+      "hybrid": 2.5833333333333335,
+      "page_hinkley": 2.5833333333333335,
+      "ddm": 2.9166666666666665,
+      "kswin": 4.666666666666667,
+      "eddm": 5.666666666666667
+    },
+    "critical_difference": 3.078351831743734
   },
-  "mean_detection_delay": {
-    "applicable": false,
-    "reason": "insufficient blocks/groups"
+  "penalized_detection_delay": {
+    "applicable": true,
+    "metric": "penalized_detection_delay",
+    "lower_is_better": true,
+    "n_blocks": 6,
+    "k_methods": 6,
+    "friedman_stat": 24.461538461538453,
+    "friedman_p": 0.00017696784481254342,
+    "average_ranks": {
+      "kswin": 1.3333333333333333,
+      "eddm": 2.3333333333333335,
+      "adwin": 4.333333333333333,
+      "ddm": 4.333333333333333,
+      "hybrid": 4.333333333333333,
+      "page_hinkley": 4.333333333333333
+    },
+    "critical_difference": 3.078351831743734
   },
   "false_positive_rate": {
-    "applicable": false,
-    "reason": "insufficient blocks/groups"
+    "applicable": true,
+    "metric": "false_positive_rate",
+    "lower_is_better": true,
+    "n_blocks": 6,
+    "k_methods": 6,
+    "friedman_stat": 19.884615384615362,
+    "friedman_p": 0.0013135900323396758,
+    "average_ranks": {
+      "adwin": 2.6666666666666665,
+      "hybrid": 2.6666666666666665,
+      "page_hinkley": 2.6666666666666665,
+      "ddm": 3.25,
+      "kswin": 4.083333333333333,
+      "eddm": 5.666666666666667
+    },
+    "critical_difference": 3.078351831743734
   }
 }
